@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'database_helper.dart';
 
 class AddExpense extends StatefulWidget {
   const AddExpense({super.key});
@@ -154,42 +155,46 @@ class _AddExpenseState extends State<AddExpense> {
                 ),
 
 
-                onPressed: (){
+                onPressed: () async {
 
-                  ScaffoldMessenger.of(context)
-                  .showSnackBar(
-
-                    const SnackBar(
-                      content: Text(
-                        "খরচ সংরক্ষণ হয়েছে"
-                      ),
-                    ),
-
-                  );
-
-                },
-
-
-                child: const Text(
-                  "💾 সংরক্ষণ",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize:18,
-                  ),
-                ),
-
-              ),
-
-            )
-
-          ],
-
-        ),
-
-      ),
-
-    );
-
+  if(amountController.text.isEmpty){
+    return;
   }
 
-}
+
+  await DatabaseHelper.instance.addExpense({
+
+    'name': selectedName,
+
+    'category': selectedCategory,
+
+    'amount': double.parse(
+      amountController.text
+    ),
+
+    'note': noteController.text,
+
+    'date': DateTime.now()
+        .toString(),
+
+  });
+
+
+
+  ScaffoldMessenger.of(context)
+  .showSnackBar(
+
+    const SnackBar(
+      content: Text(
+        "খরচ সফলভাবে সংরক্ষণ হয়েছে"
+      ),
+    ),
+
+  );
+
+
+  amountController.clear();
+
+  noteController.clear();
+
+},
