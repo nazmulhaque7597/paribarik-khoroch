@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'add_expense.dart';
+import 'expense_list.dart';
 
 void main() {
   runApp(const ParibarikKhoroch());
@@ -48,7 +49,9 @@ class HomeScreen extends StatelessWidget {
 
 
           Card(
-
+const Expanded(
+  child: ExpenseList(),
+),
             margin: const EdgeInsets.all(15),
 
             color: Colors.green.shade100,
